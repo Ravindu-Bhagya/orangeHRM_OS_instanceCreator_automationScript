@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrangeHRM Instance Creator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">&#9881;</span>
+          <span class="logo-text">OrangeHRM <strong>Instance Creator</strong></span>
+        </div>
+        <span class="header-sub">Automated deployment tool</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- ── Form panel ── -->
+      <section class="card form-card">
+        <h2 class="card-title">Deployment Configuration</h2>
+
+        <form id="instanceForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="username">LDAP Username</label>
+              <input type="text" id="username" name="username" placeholder="john.doe" required autocomplete="username">
+            </div>
+            <div class="field">
+              <label for="password">LDAP Password</label>
+              <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="serverName">Server Name</label>
+              <input type="text" id="serverName" name="serverName" value="uat" required placeholder="uat">
+              <small>Connects to <span id="hostPreview">uat.orangehrm.com</span></small>
+            </div>
+            <div class="field">
+              <label for="port">SSH Port</label>
+              <input type="number" id="port" name="port" value="8888" required min="1" max="65535">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="instanceName">Instance Name</label>
+            <input type="text" id="instanceName" name="instanceName" placeholder="my-instance" required>
+            <small id="instancePreview" class="preview-text"></small>
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="user@orangehrm.com" required>
+            <small>Confirmation email will be sent here after deployment</small>
+          </div>
+
+          <div class="field">
+            <label>OrangeHRM ZIP File</label>
+            <div class="drop-zone" id="dropZone">
+              <input type="file" id="zipFile" name="zip" accept=".zip" required>
+              <div class="drop-zone-label" id="dropLabel">
+                <span class="drop-icon">&#128230;</span>
+                <span>Drop ZIP file here or <u>click to browse</u></span>
+              </div>
+            </div>
+            <p class="file-chosen" id="fileChosen"></p>
+          </div>
+
+          <button type="submit" id="submitBtn">
+            <span id="btnText">&#9654; Create Instance</span>
+            <span id="btnSpinner" class="spinner" hidden></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ── Terminal panel ── -->
+      <section class="card terminal-card">
+        <div class="terminal-titlebar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-name">bash &mdash; orangehrm-deployer</span>
+          <button class="btn-clear" id="clearBtn" type="button">Clear</button>
+        </div>
+        <div class="terminal-body" id="terminal">
+          <p class="term-welcome">OrangeHRM Instance Creator &mdash; ready.<br>Fill in the form and click <em>Create Instance</em> to begin.</p>
+        </div>
+        <div class="terminal-footer">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Ready</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Success banner ── -->
+    <div class="success-banner" id="successBanner" hidden>
+      <div class="success-inner">
+        <div class="success-check">&#10003;</div>
+        <div>
+          <h3>Instance Created Successfully!</h3>
+          <p>Instance: <code id="successInstance"></code></p>
+          <p>A confirmation email with the installer URL has been sent to <code id="successEmail"></code>.</p>
+          <p class="success-note">Complete the installation through the web UI installer link in your email.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
